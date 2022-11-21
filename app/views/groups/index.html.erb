@@ -1,0 +1,33 @@
+<div class="container">
+
+
+  <div>
+    <h3 class = "col-md-4 offset-md-1 bg-light">サークル一覧</h2>
+     <table class = "table">
+
+      <thead>
+       <tr class=" table-secondary ">
+        <th>サークル名</th>
+        <th>紹介文</th>
+        <th>リーダー</th>
+       </tr>
+      </thead>
+      <tbody>
+        <% @groups.each do |group| %>
+         <tr>
+            <td>
+            <%= link_to group_path(group),class: 'nav-link' do %>
+              <%= group.name %>
+            <% end %>
+            </td>
+            <td>
+              <%= group.explain %>
+            </td>
+            <td><%= User.find(group.leader_id).name %></td>
+         </tr>
+        <% end %>
+     </tbody>
+
+   </table>
+  </div>
+ </div>

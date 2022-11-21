@@ -1,0 +1,44 @@
+<header class="border-bottom border-dark">
+  <nav class="navbar navbar-expand-lg navbar-white bg-white">
+    <div class="container">
+      <%=  link_to root_path,class: 'nav-link' do %>
+        <div><%= image_tag "logo.png", size: '150x75'%></div>
+      <% end %>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation"></button>
+
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav ">
+            <li>
+              <%= link_to new_user_session_path ,class: 'nav-link text-light' do %>
+                <button type="button" class="btn btn-light btn-sm">ログイン</button>
+              <% end %>
+            </li>
+            <li>
+              <%= link_to new_user_registration_path,class: 'nav-link text-light' do %>
+                <button type="button" class="btn btn-light btn-sm">新規登録</button>
+              <% end %>
+            </li>
+            <li>
+              <% if user_signed_in? %>
+                <%= link_to destroy_session_path(current_user), method: :delete,class: 'nav-link text-light' do %>
+                  <button type="button" class="btn btn-light btn-sm"><p class="small">ログアウト</p></button>
+                <% end %>
+              <% end %>
+            </li>
+            <li>
+              <% if user_signed_in? %>
+                <%= link_to new_group_path, class: 'nav-link text-light' do %>
+                  <button type="button" class="btn btn-light btn-sm"><p class="small">サークル作成</p></button>
+                <% end %>
+              <% end %>
+            </li>
+            <li>
+              <%= link_to groups_path ,class: 'nav-link text-light' do %>
+                <button type="button" class="btn btn-light btn-sm">サークル一覧</button>
+              <% end %>
+            </li>
+           </ul>
+          </div>
+        </div>
+  </nav>
+</header>
