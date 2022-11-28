@@ -8,17 +8,17 @@
 
           <% @group_chats.reverse_each do |chat| %>
             <div class="row">
-              <div class = "col-md-1 bg-success">
+              <div class = "col-md-2 bg-success">
                 <%= User.find(chat.user_id).name %>
               </div>
-              <div class = "col-md-5">
+              <div class = "col-md-5 offset-md-1 ">
                 <%= chat.chat %>
               </div>
               <div class = "col-md-2">
                 <%= l chat.created_at %>
               </div>
               <% if chat.user_id == current_user.id || current_user.admin %>
-                <%=  link_to "削除する", group_chat_path(chat.id), method: :delete, class: 'btn btn-sm btn-danger col-sm-2 mx-auto' %>
+                <%=  link_to "削除する", group_chat_path(chat.id), method: :delete, class: 'btn btn-sm btn-danger col-sm-1 mx-auto' %>
               <% end %>
             </div>
               <br>
