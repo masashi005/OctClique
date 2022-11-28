@@ -1,0 +1,62 @@
+<h2>検索結果</h2>
+
+<table class="table table-hover table-inverse">
+  <!--検索対象モデルがUserの時 -->
+  <% if @range == "User" %>
+    <tbody>
+      <thead　class='thead-light'>
+          <tr>
+            <th>メンバー名</th>
+          </tr>
+      </thead>
+      <% @users.each do |user| %>
+        <tr>
+            <td>
+              <%=  link_to user_path(user.id),class: 'nav-link' do %>
+                <%= user.name %>
+              <% end %>
+            </td>
+        </tr>
+      <% end %>
+    </tbody>
+  <% elsif @range == "Group" %>
+    <thead>
+      <tr class=" table-secondary ">
+        <th>サークル名</th>
+        <th>紹介文</th>
+        <th>リーダー</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @groups.each do |group| %>
+        <tr>
+          <td>
+            <%= link_to group_path(group),class: 'nav-link' do %>
+              <%= group.name %>
+            <% end %>
+          </td>
+          <td>
+              <%= group.explain %>
+          </td>
+          <td><%= User.find(group.leader_id).name %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  <% else %>
+    <tbody>
+      <% @tags.each do |tag| %>
+        <tr>
+          <td>
+            <%= link_to group_path(tag.group_id),class: 'nav-link' do %>
+              <%= Group.find(tag.group_id).name %>
+            <% end %>
+          </td>
+          <td>
+              <%= Group.find(tag.group_id).explain %>
+          </td>
+          <td><%= User.find(Group.find(tag.group_id).leader_id).name %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  <% end %>
+</table>

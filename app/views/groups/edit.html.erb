@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="row">
+    <h2>サークル編集</h2>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-md-8 col-lg-5 px-5 px-sm-0 mx-auto">
+      <%= form_with model: @group do |f| %>
+        <div class="form-group">
+          <%= f.label :name, "サークル名" %>
+          <%= f.text_field :name, placeholder: "サークル名" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :explain, "サークル紹介文" %>
+          <%= f.text_area :explain, placeholder: @group.explain %>
+        </div>
+        <%= f.hidden_field :leader_id, :value => current_user.id %>
+
+          <%= f.submit '更新', class: 'btn btn-success' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -3,28 +3,76 @@
     <h2>サークル詳細</h2>
   </div>
   <div class="row">
-    <div class="col-sm-5">
-      <!-- <= image_tag @product.get_product_image, size:'200x200' %> -->
-    </div>
     <div class="col-sm-7">
       <table>
         <tr>
-          <td>サークル名</td>
-          <td><%= @group.name %></td>
+          <td class = "col-sm-5">サークル名</td>
+          <td class = "col-sm-7"><%= @group.name %></td>
         </tr>
         <tr>
-          <td>サークル説明</td>
-          <td><%= @group.explain %></td>
+          <td class = "col-sm-5">サークル説明</td>
+          <td class = "col-sm-7"><%= @group.explain %></td>
         </tr>
           </td>
         </tr>
       </table>
     </div>
   </div>
+  <% if @group.leader_id == current_user.id || current_user.admin %>
+    <div class="row my-3">
+      <div class = "col-md-7">
+        <%=  link_to "編集する", edit_group_path(@group.id), class: 'btn btn-sm btn-success col-sm-3 mx-auto' %>
+        <%=  link_to "解散する", group_path(@group.id), method: :delete, class: 'btn btn-sm btn-danger col-sm-3 mx-auto' %>
+      </div>
+    </div>
+  <% end %>
+
+  <% if user_signed_in? %>
+    <% if group_member = GroupMember.find_by(user_id: current_user.id , group_id: @group.id)|| current_user.admin || current_user.id == @group.leader_id %>
+
+      <% if current_user.admin == false && current_user.id != @group.leader_id %>
+        <div class = "col-md-7">
+          <%=  link_to "脱退する", group_member_path(group_member.id), method: :delete, class: 'btn btn-sm btn-danger col-sm-3 mx-auto' %>
+          <%=  link_to "  チャットへ", chat_room_path(@group.id), class: 'btn btn-sm btn-success col-sm-3 mx-auto' %>
+        </div>
+      <% else %>
+        <div class = "col-md-6">
+          <%=  link_to "  チャットへ", chat_room_path(@group.id), class: 'btn btn-sm btn-success col-sm-3 mx-auto' %>
+        </div>
+      <% end %>
+    <% elsif current_user.id != @group.leader_id %>
+      <%= form_with model: @group_member, url:group_members_path do |f| %>
+        <div class="form-group">
+          <%= f.hidden_field :group_id, :value => @group.id %>
+          <%= f.submit 'メンバーになる'%>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
+
   <div class="row">
-    <%=  link_to "編集する", edit_group_path(@group.id), class: 'btn btn-lg btn-success col-sm-3 mx-auto' %>
+    <h2>メンバー一覧</h2>
   </div>
-  <div class="row">
-    <%=  link_to "解散する", group_path(@group.id), method: :delete, class: 'btn btn-lg btn-success col-sm-3 mx-auto' %>
+  <div class = "row">
+    <div class = "col-md-4">リーダー</div>
+    <div class = "col-md-4">
+      <%=  link_to user_path(@group.leader_id) do %>
+        <%= User.find(@group.leader_id).name %><br>
+      <% end %>
+    </div>
   </div>
+  <div class = "row">
+    <div class="col-md-4">メンバー</div>
+  </div>
+
+  <% @group_members.each do |member| %>
+    <div class = "row">
+      <div class="col-md-4 offset-md-4">
+        <%=  link_to user_path(member.user_id) do %>
+          <%= User.find(member.user_id).name %><br>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
 </div>

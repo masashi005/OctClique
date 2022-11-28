@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="row">
+       <h6 class="d-flex justify-content-left mb-5 bg-secondary p-2 text-black bg-opacity-10">マイページ</h6>
+  </div>
+  <% if @user ==  current_user || current_user.admin %>
+    <%= link_to "編集する", edit_user_path, class: "col-1 btn btn-sm btn-success" %>
+  <% end %>
+  <table border="1">
+    <tr>
+      <td bgcolor="#cococo" width="20%">ユーザーネーム</td>
+      <td width="60%"><%= @user.name%></td>
+    <% if @user ==  current_user || current_user.admin %>
+      <tr>
+        <td bgcolor="#cococo">メールアドレス</td>
+        <td><%= @user.email %></td>
+      </tr>
+    <% end %>
+  </table>
+  <div class="field row mb-2">
+    <%= link_to "所属グループ一覧を見る", belong_to_group_path(@user.id), class: "col-9 btn btn-sm btn-success" %>
+  </div>
+</div>
+
+
+
+

@@ -1,0 +1,28 @@
+<div class="container">
+  <div class="row">
+    <div class="col-1">
+    </div>
+       <h6 class="d-flex justify-content-left mb-5 bg-secondary p-2 text-black bg-opacity-10">会員一覧</h6>
+  </div>
+
+      <table class='table'>
+        <thead　class='thead-light'>
+          <tr>
+            <th>メンバー名</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @users.each do |user| %>
+            <% if user.admin == false %>
+              <tr>
+                <td>
+                  <%=  link_to user_path(user.id),class: 'nav-link' do %>
+                    <%= user.name %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+</div>

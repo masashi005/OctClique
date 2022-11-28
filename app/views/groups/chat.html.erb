@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="row">
+    <div class="col-1">
+    </div>
+       <h6 class="d-flex justify-content-left mb-5 bg-secondary p-2 text-black bg-opacity-10">チャット</h6>
+  </div>
+
+
+          <% @group_chats.reverse_each do |chat| %>
+            <div class="row">
+              <div class = "col-md-1 bg-success">
+                <%= User.find(chat.user_id).name %>
+              </div>
+              <div class = "col-md-5">
+                <%= chat.chat %>
+              </div>
+              <div class = "col-md-2">
+                <%= l chat.created_at %>
+              </div>
+              <% if chat.user_id == current_user.id || current_user.admin %>
+                <%=  link_to "削除する", group_chat_path(chat.id), method: :delete, class: 'btn btn-sm btn-danger col-sm-2 mx-auto' %>
+              <% end %>
+            </div>
+              <br>
+          <% end %>
+
+      <%= form_with model: @group_chat,url: group_chats_path do |f| %>
+        <div class="form-group">
+          <%= f.hidden_field :group_id, :value => @group.id %>
+          <%= f.hidden_field :user_id, :value => current_user.id %>
+          <%= f.text_area :chat, placeholder: "チャット" %>
+          <%= f.submit '送信', class: 'btn btn-success' %>
+        </div>
+      <% end %>
+</div>
